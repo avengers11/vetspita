@@ -1,0 +1,12 @@
+[19-Dec-2024 16:00:30 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Console\Kernel" not found in /home/vetspita/public_html/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/app/Console/Kernel.php on line 8
+[19-Dec-2024 16:00:31 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Console\Kernel" not found in /home/vetspita/public_html/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/app/Console/Kernel.php on line 8
+[19-Dec-2024 16:39:11 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Console\Kernel" not found in /home/vetspita/public_html/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/app/Console/Kernel.php on line 8

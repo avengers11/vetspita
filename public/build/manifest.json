@@ -1,0 +1,24 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-ae3fdfb3.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-1ca61c52.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/toastr.css": {
+    "file": "assets/toastr-b6a82ad0.css",
+    "src": "resources/js/toastr.css"
+  },
+  "resources/js/toastr.js": {
+    "css": [
+      "assets/toastr-b6a82ad0.css"
+    ],
+    "file": "assets/toastr-b8a3833b.js",
+    "isEntry": true,
+    "src": "resources/js/toastr.js"
+  }
+}

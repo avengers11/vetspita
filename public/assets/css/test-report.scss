@@ -1,0 +1,304 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+@mixin title() {
+    white-space: nowrap;
+    font-family: sans-serif;
+    font-weight: 500;
+    color: black;
+    font-size: 12.5px;
+}
+@mixin headline() {
+    white-space: nowrap;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: black;
+    font-size: 13.5px;
+}
+
+input,
+select {
+    border: none;
+    border-bottom: 1px dotted #000000;
+    outline: none;
+    width: 100%;
+    @include title();
+}
+textarea{
+    border: none;
+    border-bottom: 1px dotted #000000;
+    outline: none;
+    width: 100%;
+    height: 22px;
+    text-wrap: auto !important;
+}
+/* Style the scrollbar */
+textarea::-webkit-scrollbar {
+    width: 0; /* Width of the scrollbar */
+}
+.d-none {
+    display: none !important;
+}
+.d-flex{
+    display: flex;
+}
+.gap-2{
+    gap: 5px;
+}
+.mb-0{
+    margin-bottom: 0 !important;
+}
+.mb-3{
+    margin-bottom: 10px !important;
+}
+.mt-2{
+    margin-top: 5px;
+}
+.title{
+    @include title();
+}
+.headline{
+    @include headline();
+}
+
+#prescription {
+    width: 210mm;
+    min-height: 296.3mm;
+    margin: auto;
+    box-sizing: border-box;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    .prescription-header {
+        width: 100%;
+        img {
+            width: 100%;
+        }
+    }
+    .prescription-body {
+        min-height: 55rem;
+        padding: 0 15px;
+        padding-top: 10px;
+        .information-top {
+            display: grid;
+            grid-template-columns: 330px 248px 145px;
+            grid-gap: 10px;
+            border: 1px solid black;
+            padding: 10px;
+            border-radius: 7px;
+            .box {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                justify-content: start;
+                strong {
+                    @include title();
+                }
+                span {
+                    width: 100%;
+                }
+            }
+        }
+        .details-test-report-wrapper {
+            .test-report-wrapper{
+                margin-top: 15px;
+            }
+            .details-content-wrapper{
+                margin-top: 15px;
+                .range-wrapper{
+                    position: relative;
+                    input[type="range"] {
+                        -webkit-appearance: none;
+                        appearance: none;
+                        width: 100%;
+                        height: 20px;
+                        background: none;
+                        outline: none;
+                        border: 1px solid black;
+                        border-radius: 7px;;
+                    }
+                    input[type="range"]::-webkit-slider-runnable-track {
+                        width: 100%;
+                        height: 6px;
+                        background: none;
+                        border-radius: 3px;
+                        cursor: pointer;
+                    }
+                    input[type="range"]::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        appearance: none;
+                        height: 20px;
+                        width: 10px;
+                        background: black;
+                        border-radius: 7px;
+                        cursor: pointer;
+                        margin-top: -7px;
+                    }
+                    span.bar1{
+                        width: 2px;
+                        display: block;
+                        position: absolute;
+                        left: 33.3%;
+                        top: -4px;
+                    }
+                    span.bar2{
+                        width: 2px;
+                        display: block;
+                        position: absolute;
+                        right: 33.3%;
+                        top: -4px;
+                    }
+                }
+                // table{
+                //     margin-bottom: 20px !important;
+                //     thead{
+                //         tr{
+                //             th{
+                //                 border-top: 1px solid black;
+                //                 border-bottom: 1px solid black;
+                //             }
+                //         }
+                //     }
+                //     tbody{
+                //         tr{
+                //             td{
+                //                 padding-top: 5px;
+                //             }
+                //         }
+                //     }
+                // }
+
+                // table{
+                //     margin-bottom: 20px !important;
+                //     thead{
+                //         tr{
+                //             th{
+                //                 border-top: 1px solid black;
+                //                 border-bottom: 1px solid black;
+                //             }
+                //         }
+                //     }
+                //     tbody{
+                //         tr{
+                //             td{
+                //                 padding-top: 5px;
+                //             }
+                //         }
+                //     }
+                // }
+            }
+        }
+    }
+    .prescription-footer {
+        width: 100%;
+        height: 85px;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    // print 
+    &.print{
+        input,
+        select {
+            border: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        textarea{
+            border: none;
+            resize: none;
+            overflow: hidden;
+        }
+
+        .prescription-body .bootstrap-select>.dropdown-toggle{
+            border-bottom: 0 !important;
+         
+            &:after{
+                display: none !important;
+            }
+        }
+
+        .prescription-body{
+            .details-test-report-wrapper{
+                .test-report-wrapper{
+                }
+            }
+        }
+    }
+}
+
+.btn-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    position: fixed;
+    z-index: 999;
+    bottom: -30px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #dddd;
+    border-radius: 15px;
+    button{
+        padding: 10px 15px;
+        border: none;
+        outline: none;
+        background: none;
+        border-radius: 7px;
+        color: white;
+    }
+    .btn-success{
+        background: green;
+    }
+    .btn-print{
+        background: #1376BC;
+    }
+    .btn-preview{
+        background: #1376BC;
+    }
+    .badge{
+        cursor: pointer;
+    }
+}
+
+#prescription .prescription-body .bootstrap-select .dropdown-toggle:focus, .bootstrap-select>select.mobile-device:focus+.dropdown-toggle{
+    outline: 0 !important;
+}
+#prescription .prescription-body .bootstrap-select>.dropdown-toggle{
+    border: none;
+    border-bottom: 1px dotted #000000;
+    outline: none;
+    width: 100%;
+    box-shadow: none;
+    background: none;
+    padding-top: 0;
+    padding-left: 0;
+    padding-bottom: 0;
+    @include title();
+}
+#prescription .prescription-body .patient-name .bootstrap-select>.dropdown-toggle{
+    width: 248px  !important;
+}
+#prescription .prescription-body .parents-name .bootstrap-select>.dropdown-toggle{
+    width: 245px  !important;
+}
+#prescription .prescription-body .saved-prescriptions .bootstrap-select>.dropdown-toggle{
+    width: 202px !important;
+}
+
+#prescription .prescription-body .bootstrap-select .dropdown-menu li a{
+    @include title();
+}
+#prescription .prescription-body .dropdown-item.active, #prescription .prescription-body .dropdown-item:active{
+    color: white !important;
+}
+.tox-promotion, span.tox-statusbar__branding{
+    display: none;
+}

@@ -1,0 +1,36 @@
+[19-Dec-2024 16:01:54 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/vetspita/public_html/database/seeders/DatabaseSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/database/seeders/DatabaseSeeder.php on line 8
+[19-Dec-2024 16:01:56 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/vetspita/public_html/database/seeders/DatabaseSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/database/seeders/DatabaseSeeder.php on line 8
+[19-Dec-2024 16:01:56 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/vetspita/public_html/database/seeders/GeneralSettings.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/database/seeders/GeneralSettings.php on line 9
+[19-Dec-2024 16:01:57 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/vetspita/public_html/database/seeders/GeneralSettings.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/database/seeders/GeneralSettings.php on line 9
+[19-Dec-2024 16:01:57 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/vetspita/public_html/database/seeders/PermissionSeeder.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/database/seeders/PermissionSeeder.php on line 10
+[19-Dec-2024 16:01:59 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/vetspita/public_html/database/seeders/PermissionSeeder.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/database/seeders/PermissionSeeder.php on line 10
+[19-Dec-2024 17:12:28 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/vetspita/public_html/database/seeders/DatabaseSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/database/seeders/DatabaseSeeder.php on line 8
+[19-Dec-2024 17:12:51 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/vetspita/public_html/database/seeders/GeneralSettings.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/database/seeders/GeneralSettings.php on line 9
+[19-Dec-2024 17:13:13 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/vetspita/public_html/database/seeders/PermissionSeeder.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/vetspita/public_html/database/seeders/PermissionSeeder.php on line 10
