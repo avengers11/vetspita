@@ -165,7 +165,7 @@
                                     @endphp         
                                     <tr>
                                         <td style="width: 20%">{{ $content->ref_abbreviation ?? "" }} </td>
-                                        <td style="width: 15%">{{ $content->ref_result ?? "" }} == {{ $step }} == {{ $minRef }}</td>
+                                        <td style="width: 15%">{{ $content->ref_result ?? "" }}</td>
                                         <td style="width: 10%">{{ $content->ref_comment ?? "" }}</td>
                                         <td style="width: 15%">{{ $content->ref_value ?? "" }}</td>
                                         <td style="width: 10%">{{ $content->ref_unit ?? "" }}</td>
