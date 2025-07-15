@@ -292,7 +292,7 @@
                                             @endcan
 
                                             @can('Invoice Cost')
-                                                <li class="nav-item">
+                                                <li class="nav-item d-none">
                                                     <a href="{{ route('admin.invoice.transaction.index') }}" class="nav-link @if(Route::is('admin.invoice.transaction.index')) active @endif">  Invoice Transaction </a>
                                                 </li>
                                             @endcan
@@ -433,19 +433,23 @@
                                         <i class="ri-hospital-fill"></i>
                                         <span data-key="t-Test">Lab Diognosis</span>
                                     </a>
-                                    <div class="collapse @if(Route::is('admin.lab.*')) show @endif menu-dropdown" id="sidebarLabTest">
+                                    <div class="collapse @if(Route::is('admin.lab-diognosis.*')) show @endif menu-dropdown" id="sidebarLabTest">
                                         <ul class="nav nav-sm flex-column">
-                                            @can('Lap Diognosis View')
+                                            <li class="nav-item">
+                                                <a href="{{ route('admin.lab-diognosis.biochemical.index') }}" class="nav-link @if(Route::is('admin.lab.test.all.index')) active @endif">Biochemical</a>
+                                            </li>
+
+                                            {{-- @can('Lap Diognosis View')
                                                 <li class="nav-item">
                                                     <a href="{{ route('admin.lab.test.all.index') }}" class="nav-link @if(Route::is('admin.lab.test.all.index')) active @endif">All Test Reports</a>
                                                 </li>
-                                            @endcan
+                                            @endcan --}}
 
-                                            @can('Lap Diognosis Template View')
+                                            {{-- @can('Lap Diognosis Template View')
                                                 <li class="nav-item">
                                                     <a href="{{ route('admin.lab.test.template.index') }}" class="nav-link @if(Route::is('admin.lab.test.template.*')) active @endif">Create Report Template</a>
                                                 </li>
-                                            @endcan
+                                            @endcan --}}
                                         </ul>
                                     </div>
                                 </li>

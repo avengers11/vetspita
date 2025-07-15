@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\admin\AdminAccountController;
 use App\Http\Controllers\admin\AdminAppointmentController;
 use App\Http\Controllers\admin\AdminCareerController;
+use App\Http\Controllers\admin\AdminLabDiognosisController;
 use App\Http\Controllers\admin\AdminConsultantController;
 use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\admin\AdminGalleryController;
 use App\Http\Controllers\admin\AdminGeneralSettingController;
 use App\Http\Controllers\admin\AdminInvoiceController;
+use App\Http\Controllers\admin\AdminLabTestController;
 use App\Http\Controllers\admin\AdminMedicineController;
 use App\Http\Controllers\admin\AdminPetsController;
 use App\Http\Controllers\admin\AdminPostController;
@@ -15,18 +18,16 @@ use App\Http\Controllers\admin\AdminPrescriptionController;
 use App\Http\Controllers\admin\AdminProductsController;
 use App\Http\Controllers\admin\AdminServiceController;
 use App\Http\Controllers\admin\AdminTestController;
-use App\Http\Controllers\admin\AdminLabTestController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ConsultantController;
+use App\Http\Controllers\eConsultationController;
 use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\eConsultationController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -481,6 +482,23 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function(){
             Route::get('/', 'task')->name('index')->middleware('permission:Lab Task View');
             Route::get('/status/{task}', 'statusTest')->name('status')->middleware('permission:Lab Task Status');
             Route::get('/delete/{task}', 'deleteTest')->name('delete')->middleware('permission:Lab Task Delete');
+        });
+
+    });
+
+    // Lab Diognosis 
+    Route::controller(AdminLabDiognosisController::class)->prefix('lab-diognosis')->name('lab-diognosis.')->group(function(){
+        // Biochemical 
+        Route::prefix('biochemical')->name('biochemical.')->group(function(){
+            Route::get('/', 'index')->name('index'); //->middleware('permission:Lap Diognosis View');
+            Route::get('/add', 'biochemicalAdd')->name('add'); //->middleware('permission:Lap Diognosis Add');
+            Route::post('/create', 'biochemicalCreate')->name('create'); //->middleware('permission:Lap Diognosis Add');
+            Route::get('/edit/{prescription}', 'biochemicalEdit')->name('edit'); //->middleware('permission:Lap Diognosis Edit');
+            Route::get('/update/{prescription}', 'biochemicalUpdate')->name('update'); //->middleware('permission:Lap Diognosis Edit');
+            Route::get('/delete/{prescription}', 'biochemicalDelete')->name('delete'); //->middleware('permission:Lap Diognosis Delete');
+            Route::get('/print/{prescription}', 'biochemicalPrint')->name('print'); //->middleware('permission:Lap Diognosis Delete');
+            Route::POST('/patient-info', 'patientInfo')->name('patientInfo');
+            Route::POST('/parents-info', 'parentsInfo')->name('parentsInfo');
         });
 
     });

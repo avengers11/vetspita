@@ -24,7 +24,11 @@ class AdminInvoiceController extends Controller
         $dataTypes = Invoice::latest()
             ->whereDate('created_at', $date)
             ->get();
-    
+
+        $total_amount = $dataTypes->sum("cart_paid");
+        $total_cost = $dataTypes->sum("cart_cost");
+        $total_profit = $total_amount - $total_cost;
+
         // Step 2: If item filter is applied, refine further
         if (!empty($itemType)) {
             $dataTypes = $dataTypes->filter(function ($invoice) use ($itemType) {
@@ -35,20 +39,6 @@ class AdminInvoiceController extends Controller
                 return collect($items)->contains('item_type', $itemType);
             })->values(); // Reset keys
         }
-    
-        // Step 3: Get transactions summary for that date
-        $transactions = InvoiceTransaction::whereDate('created_at', $date)
-            ->selectRaw('
-                SUM(total_amount - discount) as total_amount,
-                SUM(total_cost) as total_cost,
-                SUM(total_amount - discount - total_cost) as total_profit
-            ')
-            ->first();
-    
-        // Step 4: Handle possible nulls
-        $total_amount = (float) ($transactions->total_amount ?? 0);
-        $total_cost = (float) ($transactions->total_cost ?? 0);
-        $total_profit = (float) ($transactions->total_profit ?? 0);
     
         return view('admin.invoice.index', compact(
             'dataTypes',

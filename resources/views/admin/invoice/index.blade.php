@@ -134,6 +134,8 @@
                             <th>{{keywords()->Patient_Name ?? __('Patient Name')}} </th>
                             <th>{{keywords()->Parents_Name ?? __('Parents Name')}} </th>
                             <th>{{keywords()->Total_Amount ?? __('Total Amount')}} </th>
+                            <th>{{keywords()->Total_Cost ?? __('Total Cost')}} </th>
+                            <th>{{keywords()->Total_Paid ?? __('Total Paid')}} </th>
                             <th>{{keywords()->Status ?? __('Status')}} </th>
                             @canany(['Invoice Print', 'Invoice Delete', 'Invoice Add'])
                                 <th class="d-flex justify-content-end">{{keywords()->Actions ?? __('Actions')}} </th>
@@ -149,6 +151,8 @@
                                 <td>{{$data->patient_name}}</td>
                                 <td>{{$data->parents_name}}</td>
                                 <td>{{$data->cart_total}}</td>
+                                <td>{{$data->cart_cost}}</td>
+                                <td>{{$data->cart_paid}}</td>
                                 <td class="text-capitalize">{{$data->status}}</td>
                                 
                                 @canany(['Invoice Print', 'Invoice Delete', 'Invoice Add'])

@@ -262,56 +262,76 @@ class AdminDashboardController extends Controller
         $startTime = Carbon::today()->subDays(364)->startOfDay();
         $endTime = Carbon::today()->endOfDay();
         
-        $invoiceTransactions = InvoiceTransaction::whereBetween('created_at', [$startTime, $endTime])
-            ->select(
-                DB::raw('SUM(total_amount - discount) as total_amount'),
-                DB::raw('SUM(total_cost) as total_cost'),
-                DB::raw('(SUM(total_amount - discount) - SUM(total_cost)) as total_profit')
-            )
-            ->first();
+        // Step 1: Get invoices filtered by date
+        $invoiceTransactions = Invoice::latest()
+        ->whereBetween('created_at', [$startTime, $endTime])
+        ->get();
+
+        $total_amount = $invoiceTransactions->sum("cart_paid");
+        $total_cost = $invoiceTransactions->sum("cart_cost");
+        $total_profit = $total_amount - $total_cost;
         
-        return response()->json($invoiceTransactions);
+        return response()->json([
+            "total_amount" => $total_amount,
+            "total_cost" => $total_cost,
+            "total_profit" => $total_profit
+        ]);
     }
     private function monthlyBalanceSummary(){
         $startTime = Carbon::today()->subDays(29)->startOfDay();
         $endTime = Carbon::today()->endOfDay();
         
-        $invoiceTransactions = InvoiceTransaction::whereBetween('created_at', [$startTime, $endTime])
-            ->select(
-                DB::raw('SUM(total_amount - discount) as total_amount'),
-                DB::raw('SUM(total_cost) as total_cost'),
-                DB::raw('(SUM(total_amount - discount) - SUM(total_cost)) as total_profit')
-            )
-            ->first();
+        // Step 1: Get invoices filtered by date
+        $invoiceTransactions = Invoice::latest()
+        ->whereBetween('created_at', [$startTime, $endTime])
+        ->get();
+
+        $total_amount = $invoiceTransactions->sum("cart_paid");
+        $total_cost = $invoiceTransactions->sum("cart_cost");
+        $total_profit = $total_amount - $total_cost;
         
-        return response()->json($invoiceTransactions);
+        return response()->json([
+            "total_amount" => $total_amount,
+            "total_cost" => $total_cost,
+            "total_profit" => $total_profit
+        ]);
     }
     private function savenDaysBalanceSummary(){
         $startTime = Carbon::today()->subDays(6)->startOfDay();
         $endTime = Carbon::today()->endOfDay();
         
-        $invoiceTransactions = InvoiceTransaction::whereBetween('created_at', [$startTime, $endTime])
-            ->select(
-                DB::raw('SUM(total_amount - discount) as total_amount'),
-                DB::raw('SUM(total_cost) as total_cost'),
-                DB::raw('(SUM(total_amount - discount) - SUM(total_cost)) as total_profit')
-            )
-            ->first();
+        // Step 1: Get invoices filtered by date
+        $invoiceTransactions = Invoice::latest()
+        ->whereBetween('created_at', [$startTime, $endTime])
+        ->get();
+
+        $total_amount = $invoiceTransactions->sum("cart_paid");
+        $total_cost = $invoiceTransactions->sum("cart_cost");
+        $total_profit = $total_amount - $total_cost;
         
-        return response()->json($invoiceTransactions);
+        return response()->json([
+            "total_amount" => $total_amount,
+            "total_cost" => $total_cost,
+            "total_profit" => $total_profit
+        ]);
     }
     private function TodaysBalanceSummary(){
         $startTime = Carbon::today()->startOfDay();
         $endTime = Carbon::today()->endOfDay();
 
-        $invoiceTransactions = InvoiceTransaction::whereBetween('created_at', [$startTime, $endTime])
-        ->select(
-            DB::raw('SUM(total_amount - discount) as total_amount'),
-            DB::raw('SUM(total_cost) as total_cost'),
-            DB::raw('(SUM(total_amount - discount) - SUM(total_cost)) as total_profit')
-        )
-        ->first();
+        // Step 1: Get invoices filtered by date
+        $invoiceTransactions = Invoice::latest()
+        ->whereBetween('created_at', [$startTime, $endTime])
+        ->get();
 
-        return response()->json($invoiceTransactions);
+        $total_amount = $invoiceTransactions->sum("cart_paid");
+        $total_cost = $invoiceTransactions->sum("cart_cost");
+        $total_profit = $total_amount - $total_cost;
+        
+        return response()->json([
+            "total_amount" => $total_amount,
+            "total_cost" => $total_cost,
+            "total_profit" => $total_profit
+        ]);
     }
 }

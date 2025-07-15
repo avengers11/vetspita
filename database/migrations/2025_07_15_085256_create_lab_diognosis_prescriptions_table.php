@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lab_test_prescriptions', function (Blueprint $table) {
+        Schema::create('lab_diognosis_prescriptions', function (Blueprint $table) {
             $table->id();
             $table->integer('branche_id')->nullable();
             $table->string('unique_id')->nullable();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('pet_age')->nullable();
             $table->string('pet_weight')->nullable();
             $table->longText('prescription_content')->nullable();
+            $table->longText('attachment')->nullable();
             $table->string("ref_dr")->nullable();
             $table->string('type')->nullable();
             $table->string('date')->nullable();
@@ -39,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lab_test_prescriptions');
+        Schema::dropIfExists('lab_diognosis_prescriptions');
     }
 };
