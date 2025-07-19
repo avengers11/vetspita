@@ -436,7 +436,10 @@
                                     <div class="collapse @if(Route::is('admin.lab-diognosis.*')) show @endif menu-dropdown" id="sidebarLabTest">
                                         <ul class="nav nav-sm flex-column">
                                             <li class="nav-item">
-                                                <a href="{{ route('admin.lab-diognosis.biochemical.index') }}" class="nav-link @if(Route::is('admin.lab.test.all.index')) active @endif">Biochemical</a>
+                                                <a href="{{ route('admin.lab-diognosis.biochemical.index') }}" class="nav-link @if(Route::is('admin.lab-diognosis.biochemical.*')) active @endif">Biochemical</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ route('admin.lab-diognosis.cbc.index') }}" class="nav-link @if(Route::is('admin.lab-diognosis.cbc.*')) active @endif">CBC</a>
                                             </li>
 
                                             {{-- @can('Lap Diognosis View')

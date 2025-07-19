@@ -232,7 +232,18 @@
     <div class="col-xl-4 col-md-6">
         <div class="card card-height-100">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Website Data</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Export Google Sheet</h4>
+                <div class="flex-shrink-0">
+                    <div class="dropdown card-header-dropdown">
+                        <select name="" id="" class="form-control" onchange="googleSheet(this.value)">
+                            <option value="all" selected>All</option>
+                            <option value="1y">This Year</option>
+                            <option value="30d">This Month</option>
+                            <option value="7d">Last 7 Days</option>
+                            <option value="1d">Today's</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="card-body">
@@ -240,27 +251,13 @@
                     <li class="list-group-item px-0">
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0 avatar-xs">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 22C6.47813 22 2.00098 17.5228 2.00098 12C2.00098 6.47715 6.47813 2 12.001 2C17.5238 2 22.001 6.47715 22.001 12C22.001 17.5228 17.5238 22 12.001 22ZM13.3345 12H10.501V9H13.3345C14.1629 9 14.8345 9.67157 14.8345 10.5C14.8345 11.3284 14.1629 12 13.3345 12ZM13.3345 7H8.50098V17H10.501V14H13.3345C15.2675 14 16.8345 12.433 16.8345 10.5C16.8345 8.567 15.2675 7 13.3345 7Z"></path></svg>
+                                <i class="ri-stack-fill" style="font-size: 22px"></i>
                             </div>
                             <div class="flex-grow-1 ms-2">
-                                <h6 class="mb-0">Total Products</h6>
+                                <h6 class="mb-0">Invoice sheet</h6>
                             </div>
                             <div class="flex-shrink-0 text-end">
-                                <h6 class="mb-0">{{ $totalProducts }}</h6>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="list-group-item px-0">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0 avatar-xs">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.8224 9.72867H18.729C18.1402 9.72867 17.6355 9.22399 17.6355 8.63521C17.6355 5.52306 15.1121 2.99969 12 2.99969H8.63551C5.52336 2.99969 3 5.52306 3 8.63521V15.3642C3 18.4763 5.52336 20.9997 8.63551 20.9997H15.3645C18.4766 20.9997 21 18.4763 21 15.3642V10.9062C21 10.2333 20.4953 9.72867 19.8224 9.72867ZM8.5514 7.54175H12.5888C13.1776 7.54175 13.6822 8.04642 13.6822 8.63521C13.6822 9.22399 13.1776 9.72867 12.5888 9.72867H8.5514C7.96262 9.72867 7.45794 9.22399 7.45794 8.63521C7.45794 8.04642 7.96262 7.54175 8.5514 7.54175ZM15.4486 16.4576H8.63551C8.04673 16.4576 7.54206 15.953 7.54206 15.3642C7.54206 14.7754 8.04673 14.2707 8.63551 14.2707H15.4486C16.0374 14.2707 16.5421 14.7754 16.5421 15.3642C16.5421 15.953 16.0374 16.4576 15.4486 16.4576Z"></path></svg>
-                            </div>
-                            <div class="flex-grow-1 ms-2">
-                                <h6 class="mb-0">Total Post</h6>
-                            </div>
-                            <div class="flex-shrink-0 text-end">
-                                <h6 class="mb-0">{{ $totalPosts }}</h6>
+                                <a id="google_sheet_invoice" href="{{ route("admin.dashboard.excelInvoice") }}?date=all" class="mb-0 btn btn-success">Download</a>
                             </div>
                         </div>
                     </li>
@@ -457,5 +454,10 @@
             let filter = $(this).attr("filter")
             balanceChartGraph();
         });
+
+        // export sheet
+        function googleSheet(filter){
+            $("#google_sheet_invoice").attr("href", `/admin/excel-invoice?date=${filter}`);
+        }
     </script>
 @endpush

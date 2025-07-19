@@ -5,18 +5,17 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Invoice;
-use App\Models\InvoiceEquipment;
 use App\Models\InvoiceTransaction;
 use App\Models\LabTechnicianTest;
 use App\Models\LabTestPrescription;
 use App\Models\Pet;
 use App\Models\Post;
 use App\Models\Product;
-use App\Models\Service;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exports\InvoicesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminDashboardController extends Controller
 {
@@ -333,5 +332,102 @@ class AdminDashboardController extends Controller
             "total_cost" => $total_cost,
             "total_profit" => $total_profit
         ]);
+    }
+
+
+    // download excel
+    public function excelInvoice(Request $request)
+    {
+        $date = $request->date;
+        if($date === "all"){
+            $startTime = Carbon::today()->subDays(9999)->startOfDay();
+            $endTime = Carbon::today()->endOfDay();
+        }
+
+        else if($date === "1y"){
+            $startTime = Carbon::today()->subDays(364)->startOfDay();
+            $endTime = Carbon::today()->endOfDay();
+        }
+
+        else if($date === "30d"){
+            $startTime = Carbon::today()->subDays(29)->startOfDay();
+            $endTime = Carbon::today()->endOfDay();
+        }
+
+        else if($date === "7d"){
+            $startTime = Carbon::today()->subDays(6)->startOfDay();
+            $endTime = Carbon::today()->endOfDay();
+        }
+
+        else if($date === "1d"){
+            $startTime = Carbon::today()->startOfDay();
+            $endTime = Carbon::today()->endOfDay();
+        }
+        
+        
+        
+
+        $invoiceTransactions = Invoice::leftJoin('pets', 'invoices.patient_id', '=', 'pets.unique_id')
+        ->whereBetween('invoices.created_at', [$startTime, $endTime])
+        ->orderBy('invoices.created_at', 'desc')
+        ->select([
+            \DB::raw("DATE_FORMAT(invoices.created_at, '%d/%m/%y') as date"),
+            \DB::raw("DATE_FORMAT(invoices.created_at, '%h:%i %p') as time"),
+            \DB::raw('NULL as ref_dr'),
+            'pets.species as pet_species',
+            'pets.name as pet_name',
+            \DB::raw("CONCAT(parents_name, ', ', address) as owner_name_address"),
+            'user_number as owner_number',
+            \DB::raw('NULL as purpose'),
+            \DB::raw('NULL as remarks'),
+            'cart_total as amount',
+            'payment_method as payment_gateway',
+            'cart_paid as total_paid',
+            'cart_due as due',
+        ])
+        ->get();
+
+        $uniqueInvoices = [];
+        $lastSeenDate = null;
+        foreach ($invoiceTransactions as $invoice) {
+            if ($invoice->date !== $lastSeenDate) {
+                $uniqueInvoices[] = [
+                    'date' => $invoice->date,
+                    'time' => $invoice->time,
+                    'ref_dr' => $invoice->ref_dr,
+                    'pet_species' => $invoice->pet_species,
+                    'pet_name' => $invoice->pet_name,
+                    'owner_name_address' => $invoice->owner_name_address,
+                    'owner_number' => $invoice->owner_number,
+                    'purpose' => $invoice->purpose,
+                    'remarks' => $invoice->remarks,
+                    'amount' => $invoice->amount,
+                    'payment_gateway' => $invoice->payment_gateway,
+                    'total_paid' => $invoice->total_paid,
+                    'due' => $invoice->due
+                ];
+                $lastSeenDate = $invoice->date;
+            } else {
+                $uniqueInvoices[] = [
+                    'date' => '',
+                    'time' => $invoice->time,
+                    'ref_dr' => $invoice->ref_dr,
+                    'pet_species' => $invoice->pet_species,
+                    'pet_name' => $invoice->pet_name,
+                    'owner_name_address' => $invoice->owner_name_address,
+                    'owner_number' => $invoice->owner_number,
+                    'purpose' => $invoice->purpose,
+                    'remarks' => $invoice->remarks,
+                    'amount' => $invoice->amount,
+                    'payment_gateway' => $invoice->payment_gateway,
+                    'total_paid' => $invoice->total_paid,
+                    'due' => $invoice->due
+                ];
+            }
+        }
+        $uniqueInvoicesCollection = collect($uniqueInvoices);
+
+        $sheetName = $date."-".date("dmyhis").".xlsx";
+        return Excel::download(new InvoicesExport($uniqueInvoicesCollection), $sheetName);
     }
 }
