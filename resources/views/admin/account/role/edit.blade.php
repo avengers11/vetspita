@@ -28,7 +28,7 @@
                 <form action="{{route('admin.role.roleUpdate', $role)}}" method="POST">
                     @csrf
 
-                    <div class="mb-3">
+                    <div class="mb-3 d-none">
                         <label class="form-label" for="employees-role-name">{{keywords()->Name ?? __('Name')}}</label>
                         <input type="text" class="form-control" id="employees-role-name" value="{{$role->name}}" name="name" placeholder="Enter role name..." />
                     </div>

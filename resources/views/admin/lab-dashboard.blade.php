@@ -115,7 +115,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="text-nowrap text-start">{{ $item->test->name }}</div>
+                                        <div class="text-nowrap text-start">{{ $item->test->name ?? "" }}</div>
                                     </td>
                                 </tr>
                             @endforeach
