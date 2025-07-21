@@ -547,9 +547,9 @@
                         href="/blog">Blogs</a></li>
                 <li><a class="{{ Request::is('career') ? 'text-primary_dark' : 'text-dark' }}"
                         href="/career">Career</a></li>
-                <li class="py-2">
+                <li>
                     <a href="{{ route('appointment.index') }}"
-                        class="h-full grid place-items-center hover:text-primary_dark transition-all {{ Route::is('appointment.index') ? 'text-primary_dark' : 'text-dark' }}">
+                        class="{{ Route::is('appointment.index') ? 'text-primary_dark' : 'text-dark' }}">
                         Appointment
                     </a>
                 </li>
