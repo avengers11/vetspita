@@ -61,7 +61,7 @@
 
                                             @if ($data->status == "pending")
                                                 @can('Lab Task Status')
-                                                    <a href="{{route('admin.lab.task.status', ["task" => $data, "status" => "success"])}}" class="btn btn-success btn-label rounded-pill btn-sm"><i class="ri-add-line label-icon align-middle rounded-pill"></i> Accept</a>
+                                                    <a onclick="return confirm('Are you sure?')" href="{{route('admin.lab.task.status', ["task" => $data, "status" => "success"])}}" class="btn btn-success btn-label rounded-pill btn-sm"><i class="ri-add-line label-icon align-middle rounded-pill"></i> Accept</a>
                                                 @endcan
                                                 @can('Lab Task Status')
                                                     <a onclick="return confirm('Are you sure?')" href="{{route('admin.lab.task.status', ["task" => $data, "status" => "rejected"])}}" class="btn btn-danger btn-label rounded-pill btn-sm"><i class="ri-delete-bin-line label-icon align-middle rounded-pill"></i> Rejected</a>

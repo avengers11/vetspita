@@ -142,6 +142,7 @@
                         <input type="text" name="date" class="title" value="{{ date('Y-m-d') }}">
                     </div>
                 </div>
+                
                 {{-- wrapper  --}}
                 <div class="details-test-report-wrapper">
                     <div class="test-report-wrapper">
@@ -155,19 +156,15 @@
                                     <th>Result</th>
                                     <th></th>
                                     <th>Ref Value</th>
-                                    <th>Histogram</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (json_decode($prescription->prescription_content) as $index=>$content)
                                     <tr>
-                                        <td style="width: 30%">{{ $content->ref_parameter ?? "" }} </td>
-                                        <td style="width: 15%">{{ $content->ref_result ?? "" }}</td>
+                                        <td style="width: 50%">{{ $content->ref_parameter ?? "" }} </td>
+                                        <td style="width: 20%">{{ $content->ref_result ?? "" }}</td>
                                         <td style="width: 10%">{{ $content->ref_unit ?? "" }}</td>
-                                        <td style="width: 15%">{{ $content->ref_value ?? "" }}</td>
-                                        <td style="width: 30%">
-
-                                        </td>
+                                        <td style="width: 20%">{{ $content->ref_value ?? "" }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -191,6 +188,7 @@
     <div class="btn-wrapper">
         <button type="button" class="btn-preview">Preview</button>
         <button type="button" class="btn-print">Print</button>
+        <button type="button" style="background: red"><a href="{{ route('admin.lab.test.all.index') }}" type="button" style="color: white">Back</a></button>
     </div>
 
     {{-- script  --}}

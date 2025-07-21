@@ -43,6 +43,7 @@
                             <th>{{keywords()->User_Name ?? __('Parents Name')}}</th>
                             <th>{{keywords()->Parents_Number ?? __('Parents Number')}}</th>
                             <th>{{keywords()->Date ?? __('Date')}} </th>
+                            <th>{{keywords()->Test_Name ?? __('Test Name')}} </th>
                             @canany(['Lap Diognosis Edit', 'Lap Diognosis Delete'])
                                 <th class="text-end">{{keywords()->Actions ?? __('Actions')}} </th>
                             @endcanany
@@ -58,11 +59,18 @@
                                 <td>{{$data->owner_name}}</td>
                                 <td>{{$data->owner_number}}</td>
                                 <td>{{$data->date}}</td>
+                                <td>{{$data->type}}</td>
                                 @canany(['Lap Diognosis Edit', 'Lap Diognosis Delete'])
                                     <td>
                                         <div class="d-flex justify-content-end gap-2">
                                             @can('Lap Diognosis Edit')
-                                                {{-- <a href="" class="btn btn-success btn-label rounded-pill btn-sm"><i class="ri-edit-box-fill label-icon align-middle rounded-pill"></i> Edit</a> --}}
+                                                @if ($data->type === "Biochemical")
+                                                    <a href="{{ route('admin.lab-diognosis.biochemical.print', $data) }}" class="btn btn-success btn-label rounded-pill btn-sm"><i class="ri-edit-box-fill label-icon align-middle rounded-pill"></i> Print</a>
+                                                @elseif($data->type === "CBC")
+                                                    <a href="{{ route('admin.lab-diognosis.cbc.print', $data) }}" class="btn btn-success btn-label rounded-pill btn-sm"><i class="ri-edit-box-fill label-icon align-middle rounded-pill"></i> Print</a>
+                                                @else
+                                                    <a href="{{route('admin.lab.test.all.print',  $data)}}" class="btn btn-success btn-label rounded-pill btn-sm"><i class="ri-edit-box-fill label-icon align-middle rounded-pill"></i> Print</a>
+                                                @endif
                                             @endcan
                                             @can('Lap Diognosis Delete')
                                                 <a onclick="return confirm('Are you sure?')" href="{{route('admin.lab.test.all.delete',  $data)}}" class="btn btn-danger btn-label rounded-pill btn-sm"><i class="ri-delete-bin-line label-icon align-middle rounded-pill"></i> Delete</a>

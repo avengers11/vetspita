@@ -129,49 +129,11 @@
                                 </tr>
                             </thead>
                             <tbody id="newItems">
-                                {{-- <tr>
-                                    <th scope="row">1</th>
-                                    <td class="text-start">
-                                        <input type="text" class="form-control"/>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control"/>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control"/>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control"/>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control"/>
-                                    </td>
-                                  
-                                    <td class="item-removal">
-                                        <div class="d-flex justify-content-end">
-                                            <button class="btn btn-danger">Delete</button>
-                                        </div>
-                                    </td>
-                                </tr> --}}
+                             
                             </tbody>
-                            <tbody>
-                                <tr>
-                                    <td colspan="7">
-                                        <a data-bs-toggle="modal" data-bs-target="#addItems" class="btn btn-secondary fw-medium"><i class="ri-add-fill me-1 align-bottom"></i> Add New</a>
-                                    </td>
-                                </tr>
-                            <tbody>
                         </table>
                         <!--end table-->
                     </div>
-                </div>
-            </div>
-
-            <div class="images d-none">
-                <div class="buttons">
-                    <input type="file" name="attachment[]" id="attachment" multiple accept="image/*">
-                </div>
-                <div id="preview">
                 </div>
             </div>
         </div>
@@ -180,30 +142,6 @@
             <button type="submit" class="btn-success">Submit & Print</button>
         </div>
     </form>
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="addItems" tabindex="-1" aria-labelledby="addItemsLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addItemsLabel">Select Category</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    @foreach ($formattedData as $format)
-                        <label>{{ $format["category"] }}</label>
-                        <select class="selectpicker category-equipment-selector mb-3" data-live-search="true">
-                            <option value="">Select {{ $format["category"] }}</option>
-                            @foreach ($format["data"] as $data)
-                                <option value="" data-id="{{ $data["id"] }}" data-category="{{ $format["category"] }}" data-parameter="{{ $data["parameter"] }}" data-abbreviation="{{ $data["abbreviation"] }}" data-canine_ref_range="{{ $data["canine_ref_range"] }}" data-feline_ref_range="{{ $data["feline_ref_range"] }}" data-units="{{ $data["units"] }}">{{ $data["parameter"] }}</option>
-                            @endforeach
-                        </select>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
 
     @push('js')
         <script>
@@ -224,7 +162,7 @@
                     addNewItemFileds(id, category, parameter, abbreviation, canine_ref_range, feline_ref_range, units);
                     $("#addItems .btn-close").click();
                 });
-                const addNewItemFileds = (id, category, parameter, abbreviation, canine_ref_range, feline_ref_range, units) => {
+                const addNewItemFileds = (id, parameter, abbreviation, canine_ref_range, feline_ref_range, units) => {
                     let length = $("#newItems").children().length + 1;
                     let refValue = "";
                     var petSpecies = $('[name="pet_species"]').val().toLowerCase();
@@ -260,9 +198,6 @@
                             </td>
                         </tr>
                     `);
-
-                    $('.category-equipment-selector').selectpicker('destroy');
-                    $('.category-equipment-selector').selectpicker();
                 }
                 // remove 
                 $(document).on("click", "#newItems .item-removal", function(){
@@ -314,7 +249,6 @@
                 $("#all_pets").change(function() {
                     changeDataByPets();
                 });
-
                 const changeDataByPets = () => {
                     const selectedOption = $("#all_pets").find('option:selected');
                     const id = selectedOption.data('id');
@@ -348,43 +282,38 @@
                             $("#age").val(ageYears +" "+ ageMonths);
                             $("#patient_id").val(data.pet.unique_id != null ? data.pet.unique_id : "");
 
-                            $("#user_number").val(data.user.number != null ? data.user.number : "");
-                            $("#address").val(data.user.address != null ? data.user.address : "");
-                            $("#select_user").val(data.user.name != null ? data.user.name : "");
-                            $("#select_user").html(`<option value='${data.user.name != null ? data.user.name : ""}'>${data.user.name != null ? data.user.name : ""}</option>`);
+                            allRefs();
+
+                            $("#user_number").val(data.user != null ? data.user.number : "");
+                            $("#address").val(data.user != null ? data.user.address : "");
+                            $("#select_user").val(data.user != null ? data.user.name : "");
+                            $("#select_user").html(`<option value='${data.user != null ? data.user.name : ""}'>${data.user != null ? data.user.name : ""}</option>`);
                             $("#select_user").selectpicker('destroy');
                             $("#select_user").selectpicker();
                         }
                     });
                 }
-
                 changeDataByPets();
 
-                // images attachment
-                $("#attachment").on("change", function(event) {
-                    var files = event.target.files; // FileList object
-
-                    // Loop through each selected file
-                    $.each(files, function(index, file) {
-                        if (file.type.startsWith("image/")) {
-                            $("#preview").html('');
-
-                            // OPTIONAL: Preview the image
-                            var reader = new FileReader();
-                            reader.onload = function(e) {
-                                var img = $("<img>").attr("src", e.target.result).css({
-                                "width": "150px",
-                                "margin": "5px"
-                                });
-                                $("#preview").append(img);
-                            };
-                            reader.readAsDataURL(file); // Read image as Data URL
-                        } else {
-                            console.warn("Not an image file:", file.name);
+                // all refs  
+                const allRefs = () => {
+                    $("#newItems").html("");
+                    console.log("hi");
+                    
+                    $.ajax({
+                        method: "GET",
+                        url: "/admin/lab-diognosis/cbc/ref-values",
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        data: {},
+                        success: function(data) {
+                            data.map((curE) => {
+                                addNewItemFileds(curE.id, curE.parameter, curE.abbreviation, curE.canine_ref_range, curE.feline_ref_range, curE.units);
+                            })
                         }
                     });
-                });
-
+                }
             });
         </script>
     @endpush

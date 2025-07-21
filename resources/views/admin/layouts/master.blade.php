@@ -433,26 +433,26 @@
                                         <i class="ri-hospital-fill"></i>
                                         <span data-key="t-Test">Lab Diognosis</span>
                                     </a>
-                                    <div class="collapse @if(Route::is('admin.lab-diognosis.*')) show @endif menu-dropdown" id="sidebarLabTest">
+                                    <div class="collapse @if(Route::is('admin.lab.test.*')) show @endif menu-dropdown" id="sidebarLabTest">
                                         <ul class="nav nav-sm flex-column">
-                                            <li class="nav-item">
+                                            {{-- <li class="nav-item">
                                                 <a href="{{ route('admin.lab-diognosis.biochemical.index') }}" class="nav-link @if(Route::is('admin.lab-diognosis.biochemical.*')) active @endif">Biochemical</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a href="{{ route('admin.lab-diognosis.cbc.index') }}" class="nav-link @if(Route::is('admin.lab-diognosis.cbc.*')) active @endif">CBC</a>
-                                            </li>
+                                            </li> --}}
 
-                                            {{-- @can('Lap Diognosis View')
+                                            @can('Lap Diognosis View')
                                                 <li class="nav-item">
                                                     <a href="{{ route('admin.lab.test.all.index') }}" class="nav-link @if(Route::is('admin.lab.test.all.index')) active @endif">All Test Reports</a>
                                                 </li>
-                                            @endcan --}}
+                                            @endcan
 
-                                            {{-- @can('Lap Diognosis Template View')
+                                            @can('Lap Diognosis Template View')
                                                 <li class="nav-item">
                                                     <a href="{{ route('admin.lab.test.template.index') }}" class="nav-link @if(Route::is('admin.lab.test.template.*')) active @endif">Create Report Template</a>
                                                 </li>
-                                            @endcan --}}
+                                            @endcan
                                         </ul>
                                     </div>
                                 </li>

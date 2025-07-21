@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Utils\Utils;
-use App\Models\LabDiognosisPrescription;
+use App\Models\LabTestPrescription;
 use App\Models\Pet;
 use App\Models\User;
 use Carbon\Carbon;
@@ -22,7 +22,7 @@ class AdminLabDiognosisController extends Controller
     */
     public function biochemical(Request $req)
     {
-        $dataTypes = LabDiognosisPrescription::latest()->where("type", "biochemical")->paginate(10);
+        $dataTypes = LabTestPrescription::latest()->where("type", "biochemical")->paginate(10);
         return view('admin.lab-test.test.all.biochemical.index', compact('dataTypes'));
     }
     public function biochemicalAdd(Request $req)
@@ -96,7 +96,7 @@ class AdminLabDiognosisController extends Controller
             ];
         }
 
-        $prescription = new LabDiognosisPrescription();
+        $prescription = new LabTestPrescription();
         $prescription->branche_id = $req->branche_id;
         $prescription->unique_id = $this->generateUniqueBiochemicalPrescriptionId();
         $prescription->patient_id = $req->patient_id;
@@ -118,13 +118,13 @@ class AdminLabDiognosisController extends Controller
     
         return redirect(route('admin.lab-diognosis.biochemical.print', $prescription));
     }
-    public function biochemicalPrint(LabDiognosisPrescription $prescription) {
+    public function biochemicalPrint(LabTestPrescription $prescription) {
         return view('admin.lab-test.test.all.biochemical.print', compact('prescription'));
     }
     public function generateUniqueBiochemicalPrescriptionId() {
         do {
             $uniqueId = mt_rand(1000000000, 9999999999);
-        } while (LabDiognosisPrescription::where('unique_id', $uniqueId)->exists());
+        } while (LabTestPrescription::where('unique_id', $uniqueId)->exists());
     
         return $uniqueId;
     }
@@ -151,7 +151,7 @@ class AdminLabDiognosisController extends Controller
     */
     public function cbc(Request $req)
     {
-        $dataTypes = LabDiognosisPrescription::latest()->where("type", "cbc")->paginate(10);
+        $dataTypes = LabTestPrescription::latest()->where("type", "cbc")->paginate(10);
         return view('admin.lab-test.test.all.cbc.index', compact('dataTypes'));
     }
     public function cbcAdd(Request $req)
@@ -224,7 +224,7 @@ class AdminLabDiognosisController extends Controller
             ];
         }
 
-        $prescription = new LabDiognosisPrescription();
+        $prescription = new LabTestPrescription();
         $prescription->branche_id = $req->branche_id;
         $prescription->unique_id = $this->generateUniqueCbcPrescriptionId();
         $prescription->patient_id = $req->patient_id;
@@ -238,21 +238,53 @@ class AdminLabDiognosisController extends Controller
         $prescription->pet_age = $req->pet_age;
         $prescription->pet_weight = $req->pet_weight;
         $prescription->prescription_content = json_encode($contents);
-        // $prescription->attachment = json_encode($images);
+        // $prescription->attachment = json_encode($images); 
         $prescription->date = $req->date;
         $prescription->ref_dr = $req->ref_dr;
-        $prescription->type = "cbc";
+        $prescription->type = "CBC";
         $prescription->save();
     
         return redirect(route('admin.lab-diognosis.cbc.print', $prescription));
     }
-    public function cbcPrint(LabDiognosisPrescription $prescription) {
+    public function refValues() {
+        $refs = DB::table('lab_diognosis_refs')
+        ->select(
+            'category',
+            'parameter',
+            'abbreviation',
+            'canine_ref_range',
+            'feline_ref_range',
+            'units',
+            'id',
+        )
+        ->where("type", "cbc")
+        ->orderBy('order', 'asc')
+        ->get();
+
+        $formattedData = $refs->groupBy('category')->map(function ($groupedItems) {
+            return [
+                $groupedItems->map(function ($item) {
+                    return [
+                        'parameter' => $item->parameter,
+                        'abbreviation' => $item->abbreviation,
+                        'canine_ref_range' => $item->canine_ref_range,
+                        'feline_ref_range' => $item->feline_ref_range,
+                        'units' => $item->units,
+                        'id' => $item->id,
+                    ];
+                })
+            ];
+        })->values()->toArray();
+
+        return response()->json($formattedData[0][0]);
+    }
+    public function cbcPrint(LabTestPrescription $prescription) {
         return view('admin.lab-test.test.all.cbc.print', compact('prescription'));
     }
     public function generateUniqueCbcPrescriptionId() {
         do {
             $uniqueId = mt_rand(1000000000, 9999999999);
-        } while (LabDiognosisPrescription::where('unique_id', $uniqueId)->exists());
+        } while (LabTestPrescription::where('unique_id', $uniqueId)->exists());
     
         return $uniqueId;
     }

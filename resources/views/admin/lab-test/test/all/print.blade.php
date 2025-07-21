@@ -18,141 +18,102 @@
     </style>
 </head>
 <body>
-    <form action="{{ route('admin.lab.test.all.add', $template) }}" method="post">
-        @csrf 
+    <div id="prescription" class="">
+        <div class="prescription-header">
+            <img src="{{ asset("assets\images\icons\prescription-header.png") }}" alt="">
+        </div>
 
-        <div id="prescription" class="">
-            <div class="prescription-header">
-                <img src="{{ asset("assets\images\icons\prescription-header.png") }}" alt="">
-            </div>
-
-            <div class="prescription-body">
-                <div class="information-top">
-                    <div class="box patient-name">
-                        <strong>Patient Name: </strong>
-                        @if (empty($pet) || $pet == null)
-                            <select name="pet_name" id="all_pets" class="selectpicker title" data-live-search="true" required>
-                                @foreach ($pets as $item)
-                                    <option value="{{ $item->name }}" data-id="{{ $item->id }}" data-subtext="{{ $item->unique_id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        @else
-                            <select name="pet_name" id="all_pets" class="selectpicker title" data-live-search="true" required>
-                                <option value="{{ $pet->name }}" data-id="{{ $pet->id }}" data-subtext="{{ $pet->unique_id }}">{{ $pet->name }}</option>
-                            </select>
-                        @endif
-                    </div>
-                    <div class="box">
-                        <strong>Species: </strong>
-                        <input type="text" name="pet_species" id="species" class="title">
-                    </div>
-                    <div class="box">
-                        <strong>Weight: </strong>
-                        <input type="text" name="pet_weight" id="weight" class="title">
-                    </div>
-                
-                    <div class="box parents-name">
-                        <strong>Parent's Name: </strong>
-                        <select name="owner_name" id="select_user" class="selectpicker title" data-live-search="true" required>
-                            @foreach ($users as $item)
-                                <option value="{{ $item->name }}" data-id="{{ $item->id }}" data-subtext="{{ $item->number }}">{{ $item->name }}</option>
+        <div class="prescription-body">
+            <div class="information-top">
+                <div class="box patient-name">
+                    <strong>Patient Name: </strong>
+                    @if (empty($pet) || $pet == null)
+                        <select name="pet_name" id="all_pets" class="selectpicker title" data-live-search="true" required>
+                            @foreach ($pets as $item)
+                                <option value="{{ $item->name }}" data-id="{{ $item->id }}" data-subtext="{{ $item->unique_id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="box">
-                        <strong>Age: </strong>
-                        <input type="text" name="pet_age" id="age" class="title">
-                    </div>
-                    <div class="box">
-                        <strong>Gender: </strong>
-                        <select name="pet_sex" id="sex" class="title">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                    @else
+                        <select name="pet_name" id="all_pets" class="selectpicker title" data-live-search="true" required>
+                            <option value="{{ $pet->name }}" data-id="{{ $pet->id }}" data-subtext="{{ $pet->unique_id }}">{{ $pet->name }}</option>
                         </select>
-                    </div>
-                    <div class="box">
-                        <strong>Contact No: </strong>
-                        <input type="text" name="owner_number" id="user_number" class="title">
-                    </div>
-                    <div class="box">
-                        <strong>Breed: </strong>
-                        <input type="text" name="pet_breed" id="breed" class="title">
-                    </div>
-                    <div class="box">
-                        <strong>Patient ID: </strong>
-                        <input type="text" name="patient_id" id="patient_id" class="title" value="">
-                    </div>
-                    <div class="box">
-                        <strong>Address: </strong>
-                        <input type="text" name="address" id="address" class="title">
-                    </div>
-                    <div class="box saved-prescriptions">
-                        <strong>Referral Dr: </strong>
-                        <input type="text" name="ref_dr" id="ref_dr" class="title">
-                    </div>
-                    <div class="box">
-                        <strong>Date: </strong>
-                        <input type="text" name="date" class="title" value="{{ date('Y-m-d') }}">
-                    </div>
+                    @endif
                 </div>
-    
-                {{-- wrapper  --}}
-                <div class="details-test-report-wrapper">
-
-                    <div class="test-report-wrapper">
-                        <textarea name="prescription_content" id="ckeditor-classic">@php echo  isset($template) ? $templateData->prescription_content : ""; @endphp</textarea>
-                    </div>
-
-                    <div class="details-content-wrapper" id="details-content-wrapper"> </div>
+                <div class="box">
+                    <strong>Species: </strong>
+                    <input type="text" name="pet_species" id="species" class="title">
                 </div>
-            </div>
-
-            <div class="prescription-footer">
-                <img src="{{ asset("assets\images\icons\prescription-footer.png") }}" alt="">
-            </div>
-        </div>
-
-        <div class="btn-wrapper">
-            <button type="submit" class="btn-success">Submit</button>
-            <button type="button" class="btn-preview">Preview</button>
-            <button type="button" class="btn-print">Print</button>
-        </div>
-    </form>
-
-    
-    
-    @if (is_null($template))
-        <div class="modal fade show" id="SelectTemplate" tabindex="-1" aria-labelledby="SelectTemplateLabel" aria-modal="true" role="dialog" style="display: block;">
-            <div class="modal-dialog">
-                <div class="modal-content" style="box-shadow: 0 0 0 100vh #00000087;">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="SelectTemplateLabel">Select a report template</h5>
-                    </div>
-                    <div class="modal-body">
-                        <ol class="list-group list-group-numbered">
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <a href="{{ route('admin.lab-diognosis.biochemical.add') }}" class="fw-bold text-dark">Biochemical</a>
-                                </div>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <a href="{{ route('admin.lab-diognosis.cbc.add') }}" class="fw-bold text-dark">CBC</a>
-                                </div>
-                            </li>
-                            @foreach ($savedPrescription as $item)
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <a href="{{ route('admin.lab.test.all.add', ["template" => $item->prescription_name, "patient_id" => request()->get("patient_id")]) }}" class="fw-bold text-dark">{{ $item->prescription_name }}</a>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ol>
-                    </div>
+                <div class="box">
+                    <strong>Weight: </strong>
+                    <input type="text" name="pet_weight" id="weight" class="title">
+                </div>
+            
+                <div class="box parents-name">
+                    <strong>Parent's Name: </strong>
+                    <select name="owner_name" id="select_user" class="selectpicker title" data-live-search="true" required>
+                        @foreach ($users as $item)
+                            <option value="{{ $item->name }}" data-id="{{ $item->id }}" data-subtext="{{ $item->number }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="box">
+                    <strong>Age: </strong>
+                    <input type="text" name="pet_age" id="age" class="title">
+                </div>
+                <div class="box">
+                    <strong>Gender: </strong>
+                    <select name="pet_sex" id="sex" class="title">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="box">
+                    <strong>Contact No: </strong>
+                    <input type="text" name="owner_number" id="user_number" class="title">
+                </div>
+                <div class="box">
+                    <strong>Breed: </strong>
+                    <input type="text" name="pet_breed" id="breed" class="title">
+                </div>
+                <div class="box">
+                    <strong>Patient ID: </strong>
+                    <input type="text" name="patient_id" id="patient_id" class="title" value="">
+                </div>
+                <div class="box">
+                    <strong>Address: </strong>
+                    <input type="text" name="address" id="address" class="title">
+                </div>
+                <div class="box saved-prescriptions">
+                    <strong>Referral Dr: </strong>
+                    <input type="text" name="ref_dr" id="ref_dr" class="title">
+                </div>
+                <div class="box">
+                    <strong>Date: </strong>
+                    <input type="text" name="date" class="title" value="{{ date('Y-m-d') }}">
                 </div>
             </div>
+
+            {{-- wrapper  --}}
+            <div class="details-test-report-wrapper">
+
+                <div class="test-report-wrapper">
+                    <textarea name="prescription_content" id="ckeditor-classic">@php echo  isset($prescription) ? $prescription->prescription_content : ""; @endphp</textarea>
+                </div>
+
+                <div class="details-content-wrapper" id="details-content-wrapper"> </div>
+            </div>
         </div>
-    @endif
+
+        <div class="prescription-footer">
+            <img src="{{ asset("assets\images\icons\prescription-footer.png") }}" alt="">
+        </div>
+    </div>
+
+    <div class="btn-wrapper">
+        <button type="button" class="btn-preview">Preview</button>
+        <button type="button" class="btn-print">Print</button>
+        <button type="button" style="background: red"><a href="{{ route('admin.lab.test.all.index') }}" type="button" style="color: white">Back</a></button>
+    </div>
 
     {{-- script  --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

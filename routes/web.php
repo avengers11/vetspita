@@ -462,6 +462,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function(){
                 Route::any('/add/{template?}', 'addAll')->name('add')->middleware('permission:Lap Diognosis Add');
                 Route::get('/edit/{all}', 'editAll')->name('edit')->middleware('permission:Lap Diognosis Edit');
                 Route::get('/delete/{all}', 'deleteAll')->name('delete')->middleware('permission:Lap Diognosis Delete');
+                Route::get('/print/{prescription}', 'printAll')->name('print')->middleware('permission:Lap Diognosis Edit');
             });
 
             // template 
@@ -515,6 +516,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function(){
             Route::get('/print/{prescription}', 'cbcPrint')->name('print'); //->middleware('permission:Lap Diognosis Delete');
             Route::POST('/patient-info', 'patientInfo')->name('patientInfo');
             Route::POST('/parents-info', 'parentsInfo')->name('parentsInfo');
+            Route::get('/ref-values', 'refValues')->name('refValues');
         });
 
     });

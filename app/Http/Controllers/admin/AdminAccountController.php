@@ -269,7 +269,7 @@ class AdminAccountController extends Controller
             $user->user_type = 'patient';
             $user->save();
 
-            return redirect(route('admin.patient.index'))->with(['status' => true, 'msg' => 'You are successfully created a patient!']);
+            return redirect(route('admin.patient.index'))->with(['status' => true, 'msg' => 'You are successfully created a user!']);
         } catch (\Throwable $th) {
             return redirect(route('admin.patient.index'))->with(['status' => false, 'msg' => 'Error Type: '.$th]);
         }
@@ -295,7 +295,7 @@ class AdminAccountController extends Controller
             $patient->image = !empty($req->image) ? Utils::processFile($req->file('image'), 'users') : "placeholder.png";
             $patient->save();
     
-            return redirect(route('admin.patient.index'))->with(['status' => true, 'msg' => 'You are successfully created a patient!']);
+            return redirect(route('admin.patient.index'))->with(['status' => true, 'msg' => 'You are successfully created a user!']);
         } catch (\Throwable $th) {
             return redirect(route('admin.patient.index'))->with(['status' => false, 'msg' => 'Error Type: '.$th]);
         }
@@ -306,7 +306,7 @@ class AdminAccountController extends Controller
                 Storage::delete($patient->image);
             }
             $patient->delete();
-            return redirect(route('admin.patient.index'))->with(['status' => false, 'msg' => 'You are successfully deletes a patient!']);
+            return redirect(route('admin.patient.index'))->with(['status' => false, 'msg' => 'You are successfully deletes a user!']);
         } catch (\Throwable $th) {
             return redirect(route('admin.patient.index'))->with(['status' => false, 'msg' => 'Error Type: '.$th]);
         }

@@ -199,6 +199,8 @@
     <div class="btn-wrapper">
         <button type="button" class="btn-preview">Preview</button>
         <button type="button" class="btn-print">Print</button>
+        <button type="button" style="background: red"><a href="{{ route('admin.lab.test.all.index') }}" type="button" style="color: white">Back</a></button>
+        
     </div>
 
     {{-- script  --}}

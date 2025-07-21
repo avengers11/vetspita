@@ -213,8 +213,7 @@
                             </li>
 
                             <li class="relative group/package">
-                                <button
-                                    class="h-full uppercase flex items-center font-medium hover:text-primary_dark transition-all {{ Request::routeIs('plan*') ? 'text-primary_dark' : 'text-dark' }}">
+                                <button class="h-full uppercase flex items-center font-medium hover:text-primary_dark transition-all {{ Request::routeIs('plan*') ? 'text-primary_dark' : 'text-dark' }}">
                                     Our Packages
                                     <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 10 6">
@@ -223,8 +222,7 @@
                                     </svg>
                                 </button>
                                 <!-- Categories Dropdown -->
-                                <div
-                                    class="swipe_up-animation absolute z-50 hidden group-hover/package:block text-xs w-max bg-light border border-gray-100 shadow-2xl">
+                                <div class="swipe_up-animation absolute z-50 hidden group-hover/package:block text-xs w-max bg-light border border-gray-100 shadow-2xl">
                                     @foreach (searchCategories() as $package)
                                         <div class="p-4 relative group/plan">
                                             <a href="/product/filter?package={{ $package->id }}"
@@ -556,7 +554,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/user-login"
+                    <a href="/login"
                         class="inline-block text-primary_dark border-2 border-[#F68685] transition-all duration-300 uppercase hover:bg-[#F68685] hover:text-white font text-sm px-7 py-3 focus:outline-none tracking-widest">
                         Login
                     </a>

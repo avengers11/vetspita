@@ -53,6 +53,36 @@
             cursor: pointer;
         }
 
+        .borders{
+            height: 15px;
+            width: 80%;
+            border: 1px solid black;
+            border-radius: 15px;
+            position: relative
+        }
+        .borders .bar{
+            height: 14px;
+            width: 1px;
+            background: black;
+            position: absolute;
+            left: 50%;
+            top: 0;
+        }
+        .borders .bar1{
+            left: 25%;
+        }
+        .borders .bar2{
+            left: 75%;
+        }
+        .borders .result{
+            height: 14px;
+            width: 5px;
+            background: black;
+            position: absolute;
+            left: 50%;
+            top: 0;
+        }
+
     </style>
 </head>
 
@@ -114,11 +144,112 @@
                                         <strong>Date: {{ $testData->date }}</strong>
                                     </div>
                                 </div>
-                
-                                {{-- wrapper  --}}
-                                <div class="test-report-wrapper">
-                                    {!! $testData->prescription_content !!}
-                                </div>
+                                
+                                @if ($testData->type === "Biochemical")
+                                    {{-- wrapper  --}}
+                                    <div class="details-test-report-wrapper">
+                                        <div class="test-report-wrapper">
+                                            <table style="width: 100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Abbreviation</th>
+                                                        <th>Result</th>
+                                                        <th></th>
+                                                        <th>Ref Value</th>
+                                                        <th>Unit</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (json_decode($testData->prescription_content) as $index=>$content)
+                                                        @php
+                                                            $text = str_replace('\u2013', '–', trim($content->ref_value));
+
+                                                            $step = "";
+                                                            if (strpos($text, '<') !== false) {
+                                                                $text = str_replace('<', '', $text);
+                                                                $minRef = 0;
+                                                                $maxRef = trim($text);
+                                                                $step = 1;
+                                                            } elseif (strpos($text, '>') !== false) {
+                                                                $text = str_replace('>', '', $text);
+                                                                $minRef = trim($text);
+                                                                $maxRef = 100;
+                                                                $step = 2;
+                                                            } else {
+                                                                // Normal case with both min and max values
+                                                                $explode = explode('–', $text);
+                                                                $minRef = trim($explode[0]) ?? 0;
+                                                                $maxRef = trim($explode[1]) ?? 0;
+                                                                $step = 3;
+                                                            }
+                                                            $result = trim($content->ref_result);
+
+                                                            if ($result < $minRef) {
+                                                                $resultPosition = 21;
+                                                            } elseif ($result > $maxRef) {
+                                                                $resultPosition = 76;
+                                                            } else {
+                                                                $resultPosition = 25 + (($result - $minRef) / ($maxRef - $minRef)) * (75 - 25); 
+                                                            }
+                                                        @endphp         
+                                                        <tr>
+                                                            <td style="width: 20%">{{ $content->ref_abbreviation ?? "" }} </td>
+                                                            <td style="width: 15%">{{ $content->ref_result ?? "" }}</td>
+                                                            <td style="width: 10%">{{ $content->ref_comment ?? "" }}</td>
+                                                            <td style="width: 15%">{{ $content->ref_value ?? "" }}</td>
+                                                            <td style="width: 10%">{{ $content->ref_unit ?? "" }}</td>
+                                                            <td style="width: 40%">
+                                                                <div class="borders">
+                                                                    <div class="bar bar1"></div>
+                                                                    <div class="bar bar2"></div>
+                                                                    <div class="result" style="left: {{ $resultPosition }}%"></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                @elseif($testData->type === "CBC")
+                                    {{-- wrapper  --}}
+                                    <div class="details-test-report-wrapper">
+                                        <div class="test-report-wrapper">
+                                            <div class="header-title">
+                                                <h2>HEAMATOLOGY REPORT</h2>
+                                            </div>
+                                            <table style="width: 100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Test Name</th>
+                                                        <th>Result</th>
+                                                        <th></th>
+                                                        <th>Ref Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (json_decode($testData->prescription_content) as $index=>$content)
+                                                        <tr>
+                                                            <td style="width: 50%">{{ $content->ref_parameter ?? "" }} </td>
+                                                            <td style="width: 20%">{{ $content->ref_result ?? "" }}</td>
+                                                            <td style="width: 10%">{{ $content->ref_unit ?? "" }}</td>
+                                                            <td style="width: 20%">{{ $content->ref_value ?? "" }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                @else
+                                    {{-- wrapper  --}}
+                                    <div class="test-report-wrapper">
+                                        {!! $testData->prescription_content !!}
+                                    </div>
+                                @endif
+                                
+
+                                
                             </div>
 
                         </td>
