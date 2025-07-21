@@ -987,32 +987,13 @@
             </div>
             <ul class="scroller_inner flex flex-wrap gap-x-20">
                 <li class="flex-shrink-0">
-                    <img class="w-40" src="https://www.cessnalifeline.com/media/wysiwyg/brand/newz3.png"
-                        alt="" />
+                    <img class="w-40" src="{{ asset("assets/frontend/icons/company/1.png") }}" alt="" />
                 </li>
                 <li class="flex-shrink-0">
-                    <img class="w-40" src="https://www.cessnalifeline.com/media/wysiwyg/brand/newz4.png"
-                        alt="" />
+                    <img class="w-40" src="{{ asset("assets/frontend/icons/company/2.png") }}" alt="" />
                 </li>
                 <li class="flex-shrink-0">
-                    <img class="w-40" src="https://www.cessnalifeline.com/media/wysiwyg/brand/newz5.png"
-                        alt="" />
-                </li>
-                <li class="flex-shrink-0">
-                    <img class="w-40" src="https://www.cessnalifeline.com/media/wysiwyg/brand/newz6.png"
-                        alt="" />
-                </li>
-                <li class="flex-shrink-0">
-                    <img class="w-40" src="https://www.cessnalifeline.com/media/wysiwyg/brand/newz1.png"
-                        alt="" />
-                </li>
-                <li class="flex-shrink-0">
-                    <img class="w-40" src="https://www.cessnalifeline.com/media/wysiwyg/brand/newz3.png"
-                        alt="" />
-                </li>
-                <li class="flex-shrink-0">
-                    <img class="w-40" src="https://www.cessnalifeline.com/media/wysiwyg/brand/newz2.png"
-                        alt="" />
+                    <img class="w-40" src="{{ asset("assets/frontend/icons/company/3.png") }}" alt="" />
                 </li>
             </ul>
         </div>
